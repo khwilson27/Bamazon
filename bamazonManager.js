@@ -32,7 +32,6 @@ var printAllProducts = function () {
         }
         console.log("----------------------------------------------------------------------------- \n \n \n \n \n");
     })
-
 }
 
 var managerBamazon = function () {

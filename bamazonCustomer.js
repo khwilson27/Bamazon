@@ -65,6 +65,20 @@ var purchaseBamazon = function() {
                         item_id: answers.purchaseItemId
                     }], function (err, res) { if (err) throw err; });
 
+                    // Update db with new product_sales
+                    connection.query("UPDATE products SET ? WHERE ?", [{
+                        product_sales: res[0].product_sales + (res[0].price * answers.purchaseQuantity)
+                    }, {
+                        item_id: answers.purchaseItemId
+                    }], function (err, res) { if (err) throw err; });
+
+                    // Update db with total_sales for department
+                    connection.query("UPDATE departments SET ? WHERE ?", [{
+                        product_sales: 
+                    }, {
+                        item_id:
+                    }], function (err, res) { if (err) throw err; });
+
                 } else {
                     console.log("Invalid! Insufficient stock!");
                 }
