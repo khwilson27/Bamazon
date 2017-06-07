@@ -24,10 +24,13 @@ var printAllDepartments = function () {
     connection.query("SELECT * FROM departments", function (err, res) {
         console.log("\n-----------------------------------------------------------------------------");
         for (var i = 0; i < res.length; i++) {
+
+            let totalProfit = res[i].total_sales - res[i].over_head_costs;
             console.log("Department ID: " + res[i].department_id +
                 " | Department Name: " + res[i].department_name +
                 " | Overhead Costs: $" + res[i].over_head_costs +
-                " | Total Sales: $" + res[i].total_sales);
+                " | Total Sales: $" + res[i].total_sales +
+                " | Total Profit: $" + totalProfit);
         }
         console.log("----------------------------------------------------------------------------- \n \n \n");
     })
