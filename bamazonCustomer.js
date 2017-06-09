@@ -21,7 +21,7 @@ connection.connect(function (err) {
 });
 
 
-var purchaseBamazon = function() {
+var purchaseBamazon = function () {
 
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
@@ -73,11 +73,14 @@ var purchaseBamazon = function() {
                     }], function (err, res) { if (err) throw err; });
 
                     // Update db with total_sales for department
-                    connection.query("UPDATE departments SET ? WHERE ?", [{
-                        product_sales: 
-                    }, {
-                        item_id:
-                    }], function (err, res) { if (err) throw err; });
+                    connection.query("SELECT * FROM departments WHERE department_name =?", [res[0].department_name], function (err, departmentRes) {
+                        connection.query("UPDATE departments SET ? WHERE ?", [{
+                            total_sales: departmentRes[0].total_sales + (res[0].price * answers.purchaseQuantity)
+                        }, {
+                            department_name: res[0].department_name
+                        }], function (err, res) { if (err) throw err; });
+                    });
+
 
                 } else {
                     console.log("Invalid! Insufficient stock!");
